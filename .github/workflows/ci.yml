@@ -1,9 +1,9 @@
-name: CI
+name: pipeline
 
 on: [push]
 
 jobs:
-  build:
+  ci:
 
     runs-on: ubuntu-latest
 
@@ -28,11 +28,11 @@ jobs:
         RUNNER_CONTEXT: ${{ toJson(runner) }}
         STRATEGY_CONTEXT: ${{ toJson(strategy) }}
         MATRIX_CONTEXT: ${{ toJson(matrix) }}
-#      - name: test release-npm action
-#      uses: ./.github/actions/release-npm
-#      id: release-npm
-#      with:
-#        github-token: ${GITHUB_TOKEN}
+#   - name: test release-npm action
+#     uses: ./.github/actions/release-npm
+#     id: release-npm
+#       with:
+#         github-token: ${GITHUB_TOKEN}
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
@@ -44,3 +44,18 @@ jobs:
         npm test
       env:
         CI: true
+
+  publish:
+    needs: ci
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/develop'
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - name: fake publish
+      run: |
+        echo fake publish
