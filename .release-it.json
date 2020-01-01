@@ -1,5 +1,6 @@
 {
     "git": {
-        "commitMessage": "release ${version}"
+        "commitMessage": "release ${version}",
+        "tagAnnotation": "release ${version}"
     }
 }
