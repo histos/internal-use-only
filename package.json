@@ -4,6 +4,7 @@
   "description": "testing package to validate npm / github release workflow",
   "main": "index.js",
   "scripts": {
+    "release": "release-it",
     "test": "echo \"no tests\""
   },
   "repository": {
